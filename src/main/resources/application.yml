@@ -1,0 +1,16 @@
+spring:
+    application:
+        name: search-orchestrator
+
+server:
+  port: 8080
+  servlet:
+    context-path: /chat
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,env,metrics
+  server:
+    port: 8081
