@@ -1,9 +1,5 @@
 package com.kevin.chatapp.api;
 
-import static com.kevin.chatapp.JsonHelper.toJsonString;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +12,11 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.kevin.chatapp.config.ChatAppApplication;
 import com.kevin.chatapp.domain.Chat;
+
+import static com.kevin.chatapp.JsonHelper.toJsonString;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = ChatAppApplication.class)

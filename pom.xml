@@ -88,7 +88,7 @@
 
                         <importOrder>
                             <wildcardsLast>true</wildcardsLast>
-                            <order>java|javax,org,com,com.kevin,,\#com.kevin,\#</order>
+                            <order>java|javax|jakarta,org,com,com.kevin,,\#com.kevin,\#</order>
                         </importOrder>
                     </java>
                 </configuration>
