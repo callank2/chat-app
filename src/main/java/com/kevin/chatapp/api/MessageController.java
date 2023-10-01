@@ -11,7 +11,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/v1")
-public class ChatController {
+public class MessageController {
 
     @PostMapping("/send")
     public String sendMessage(@Valid @RequestBody Message message) {

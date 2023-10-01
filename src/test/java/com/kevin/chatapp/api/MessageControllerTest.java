@@ -20,8 +20,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = ChatAppApplication.class)
-@WebMvcTest(controllers = ChatController.class)
-class ChatControllerTest {
+@WebMvcTest(controllers = MessageController.class)
+class MessageControllerTest {
 
     @Autowired private MockMvc mockMvc;
 
