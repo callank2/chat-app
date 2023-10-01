@@ -7,12 +7,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kevin.chatapp.domain.Message;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/v1")
 public class ChatController {
 
     @PostMapping("/send")
-    public String sendMessage(@RequestBody Message message) {
+    public String sendMessage(@Valid @RequestBody Message message) {
         return message.text();
     }
 }

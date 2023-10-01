@@ -1,3 +1,5 @@
 package com.kevin.chatapp.domain;
 
-public record Message(String text) {}
+import jakarta.validation.constraints.NotBlank;
+
+public record Message(@NotBlank String text) {}
