@@ -12,7 +12,7 @@ import com.kevin.chatapp.domain.Message;
 public class ChatController {
 
     @PostMapping("/send")
-    public String sendMessage(@RequestBody Message message){
+    public String sendMessage(@RequestBody Message message) {
         return message.text();
     }
 }
