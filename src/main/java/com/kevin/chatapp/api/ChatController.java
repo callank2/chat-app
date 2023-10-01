@@ -1,5 +1,6 @@
 package com.kevin.chatapp.api;
 
+import java.util.UUID;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +15,7 @@ import com.kevin.chatapp.domain.Chat;
 public class ChatController {
 
     @PostMapping("/chat")
-    public String sendMessage(@Valid @RequestBody Chat chat) {
-        return chat.name();
+    public Chat createChat(@Valid @RequestBody Chat chat) {
+        return new Chat(UUID.randomUUID(), chat.name());
     }
 }
