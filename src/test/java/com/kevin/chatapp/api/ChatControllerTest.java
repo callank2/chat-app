@@ -1,5 +1,8 @@
 package com.kevin.chatapp.api;
 
+import java.util.List;
+import java.util.UUID;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,7 +21,6 @@ import com.kevin.chatapp.domain.Chat;
 import static com.kevin.chatapp.JsonHelper.fromJsonString;
 import static com.kevin.chatapp.JsonHelper.toJsonString;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
@@ -31,7 +33,7 @@ class ChatControllerTest {
     @Test
     void sendMessage_validBody_validResponse() throws Exception {
         String sendMessageUrl = "/v1/chat";
-        Chat chat = new Chat(null, "text");
+        Chat chat = new Chat(null, "text", List.of(UUID.randomUUID(), UUID.randomUUID()));
 
         MvcResult result =
                 mockMvc.perform(
@@ -45,5 +47,6 @@ class ChatControllerTest {
         Chat returnedChat = fromJsonString(content, Chat.class);
         Assertions.assertNotNull(returnedChat.chatId());
         Assertions.assertEquals(chat.name(), returnedChat.name());
+        Assertions.assertEquals(chat.userIds(), returnedChat.userIds());
     }
 }

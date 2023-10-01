@@ -16,6 +16,6 @@ public class ChatController {
 
     @PostMapping("/chat")
     public Chat createChat(@Valid @RequestBody Chat chat) {
-        return new Chat(UUID.randomUUID(), chat.name());
+        return new Chat(UUID.randomUUID(), chat.name(), chat.userIds());
     }
 }
