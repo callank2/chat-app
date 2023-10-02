@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kevin.chatapp.domain.Chat;
+import com.kevin.chatapp.domain.exception.ChatException;
 import com.kevin.chatapp.domain.usecase.UpdateChat;
 
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ public class ChatController {
     private final UpdateChat updateChat;
 
     @PostMapping("/chat")
-    public Chat createChat(@Valid @RequestBody Chat chat) {
+    public Chat createChat(@Valid @RequestBody Chat chat) throws ChatException {
         return updateChat.updateChat(chat);
     }
 }
