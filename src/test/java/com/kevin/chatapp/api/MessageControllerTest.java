@@ -1,5 +1,6 @@
 package com.kevin.chatapp.api;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.kevin.chatapp.config.ChatAppApplication;
 import com.kevin.chatapp.domain.Message;
 import com.kevin.chatapp.domain.usecase.CreateMessage;
+import com.kevin.chatapp.domain.usecase.GetMessages;
 
 import static com.kevin.chatapp.JsonHelper.toJsonString;
 
@@ -32,6 +34,7 @@ class MessageControllerTest {
     @Autowired private MockMvc mockMvc;
 
     @MockBean private CreateMessage createMessage;
+    @MockBean private GetMessages getMessages;
 
     @Test
     void sendMessage_validBody_validResponse() throws Exception {
@@ -57,5 +60,15 @@ class MessageControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void getMessages_validResponse() throws Exception {
+        String getMessagesUrl = "/v1/messages?chatId=" + UUID.randomUUID();
+        Message message = new Message(null, "text", UUID.randomUUID(), null, null);
+        when(getMessages.getMessages(any(), any())).thenReturn(List.of(message));
+        mockMvc.perform(MockMvcRequestBuilders.get(getMessagesUrl))
+                .andExpect(status().isOk())
+                .andExpect(content().string(toJsonString(List.of(message))));
     }
 }

@@ -1,6 +1,6 @@
 package com.kevin.chatapp.domain.usecase;
 
-import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -18,29 +18,18 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class CreateMessage {
+public class GetMessages {
 
     private final MessageRepository messageRepository;
     private final UserRepository userRepository;
 
-    public Message createMessage(UUID userId, Message message) throws ChatException {
+    public List<Message> getMessages(UUID userId, UUID chatId) throws ChatException {
 
-        validateUserAccess(userId, message.chatId());
+        validateUserAccess(userId, chatId);
 
-        Message messageToCreate =
-                Message.builder()
-                        .id(UUID.randomUUID())
-                        .text(message.text())
-                        .chatId(message.chatId())
-                        .author(userId)
-                        .datePosted(LocalDateTime.now())
-                        .build();
+        List<Message> messages = messageRepository.findByChatId(chatId);
 
-        return messageRepository.save(messageToCreate);
-
-        // TODO - push notifications to logged in users in chat
-
-        // Should add lastModifiedTime so users can tell which chats have new messages
+        return messages;
     }
 
     /**

@@ -26,7 +26,7 @@ public class ChatController {
     private final UpdateChat updateChat;
 
     @PostMapping("/chat")
-    public Chat createChat(@Valid @RequestBody Chat chat) throws ChatException {
+    public Chat updateChat(@Valid @RequestBody Chat chat) throws ChatException {
         return updateChat.updateChat(chat);
     }
 
