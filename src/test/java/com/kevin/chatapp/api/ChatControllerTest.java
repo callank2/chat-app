@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -17,10 +18,12 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.kevin.chatapp.config.ChatAppApplication;
 import com.kevin.chatapp.domain.Chat;
+import com.kevin.chatapp.domain.usecase.UpdateChat;
 
 import static com.kevin.chatapp.JsonHelper.fromJsonString;
 import static com.kevin.chatapp.JsonHelper.toJsonString;
 
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
@@ -28,12 +31,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(controllers = ChatController.class)
 class ChatControllerTest {
 
-    @Autowired private MockMvc mockMvc;
+    @Autowired MockMvc mockMvc;
+    @MockBean UpdateChat updateChat;
 
     @Test
     void sendMessage_validBody_validResponse() throws Exception {
         String sendMessageUrl = "/v1/chat";
         Chat chat = new Chat(null, "text", List.of(UUID.randomUUID(), UUID.randomUUID()));
+        Chat expectedChat =
+                new Chat(UUID.randomUUID(), "text", List.of(UUID.randomUUID(), UUID.randomUUID()));
+        when(updateChat.updateChat(chat)).thenReturn(expectedChat);
 
         MvcResult result =
                 mockMvc.perform(
@@ -45,8 +52,8 @@ class ChatControllerTest {
                         .andReturn();
         String content = result.getResponse().getContentAsString();
         Chat returnedChat = fromJsonString(content, Chat.class);
-        Assertions.assertNotNull(returnedChat.chatId());
-        Assertions.assertEquals(chat.name(), returnedChat.name());
-        Assertions.assertEquals(chat.userIds(), returnedChat.userIds());
+        Assertions.assertEquals(expectedChat.id(), returnedChat.id());
+        Assertions.assertEquals(expectedChat.name(), returnedChat.name());
+        Assertions.assertEquals(expectedChat.userIds(), returnedChat.userIds());
     }
 }

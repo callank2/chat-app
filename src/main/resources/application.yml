@@ -2,6 +2,14 @@ spring:
     application:
         name: chat-app
 
+mongodb:
+  host: localhost
+  port: 27017
+  authentication-database: admin
+  username: pooluser
+  password: pooluser
+  database: chat-app
+
 server:
   port: 8080
   servlet:

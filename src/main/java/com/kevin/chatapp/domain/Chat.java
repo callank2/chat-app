@@ -5,4 +5,7 @@ import java.util.UUID;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 
-public record Chat(UUID chatId, @NotBlank String name, @NotEmpty List<UUID> userIds) {}
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document("chat")
+public record Chat(UUID id, @NotBlank String name, @NotEmpty List<UUID> userIds) {}
