@@ -38,7 +38,7 @@ public class CreateMessageIT extends MongoTest {
         User user1 = new User(UUID.randomUUID(), "testUser@gmail.com", "password", List.of(chatId));
         validUser = userRepository.save(user1);
 
-        Chat chat = new Chat(chatId, "Chat 1", List.of(validUser.id()));
+        Chat chat = new Chat(chatId, "Chat 1", List.of(validUser.id()), LocalDateTime.now());
         validChat = chatRepository.save(chat);
     }
 

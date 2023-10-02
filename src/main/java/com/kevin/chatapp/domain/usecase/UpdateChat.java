@@ -1,5 +1,6 @@
 package com.kevin.chatapp.domain.usecase;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -32,7 +33,7 @@ public class UpdateChat {
         if (userIds.isEmpty())
             throw new ChatException("No users found for Chat", HttpStatus.BAD_REQUEST.value());
 
-        Chat chatToUpdate = new Chat(id, request.name(), userIds);
+        Chat chatToUpdate = new Chat(id, request.name(), userIds, LocalDateTime.now());
         Chat savedChat = chatRepository.save(chatToUpdate);
 
         updateUserAccess(savedChat.id(), userIds);

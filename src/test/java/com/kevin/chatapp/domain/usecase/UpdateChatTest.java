@@ -1,5 +1,6 @@
 package com.kevin.chatapp.domain.usecase;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -37,7 +38,12 @@ public class UpdateChatTest {
     void updateChat_invalidUsers_throwsException() {
         when(userRepository.findAllById(anyCollection())).thenReturn(Collections.EMPTY_LIST);
 
-        Chat chat = new Chat(null, "text", List.of(UUID.randomUUID(), UUID.randomUUID()));
+        Chat chat =
+                new Chat(
+                        null,
+                        "text",
+                        List.of(UUID.randomUUID(), UUID.randomUUID()),
+                        LocalDateTime.now());
 
         ChatException chatException =
                 assertThrows(ChatException.class, () -> updateChat.updateChat(chat));

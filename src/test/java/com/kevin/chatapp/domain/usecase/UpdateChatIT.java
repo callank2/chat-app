@@ -1,5 +1,6 @@
 package com.kevin.chatapp.domain.usecase;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -38,7 +39,12 @@ public class UpdateChatIT extends MongoTest {
     @Test
     void updateChat_validChat_createsInDb() throws ChatException {
 
-        Chat chat = new Chat(null, "text", List.of(validUsers.get(0).id(), UUID.randomUUID()));
+        Chat chat =
+                new Chat(
+                        null,
+                        "text",
+                        List.of(validUsers.get(0).id(), UUID.randomUUID()),
+                        LocalDateTime.now());
         Chat updatedChat = updateChat.updateChat(chat);
 
         assertChatCreated(chat);

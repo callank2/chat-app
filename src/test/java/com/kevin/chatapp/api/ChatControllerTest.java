@@ -1,5 +1,6 @@
 package com.kevin.chatapp.api;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,6 +19,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.kevin.chatapp.config.ChatAppApplication;
 import com.kevin.chatapp.domain.Chat;
+import com.kevin.chatapp.domain.usecase.ListChats;
 import com.kevin.chatapp.domain.usecase.UpdateChat;
 
 import static com.kevin.chatapp.JsonHelper.fromJsonString;
@@ -32,14 +34,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class ChatControllerTest {
 
     @Autowired MockMvc mockMvc;
+    @MockBean ListChats listChats;
     @MockBean UpdateChat updateChat;
 
     @Test
     void sendMessage_validBody_validResponse() throws Exception {
         String sendMessageUrl = "/v1/chat";
-        Chat chat = new Chat(null, "text", List.of(UUID.randomUUID(), UUID.randomUUID()));
+        LocalDateTime now = LocalDateTime.now();
+        Chat chat = new Chat(null, "text", List.of(UUID.randomUUID(), UUID.randomUUID()), now);
         Chat expectedChat =
-                new Chat(UUID.randomUUID(), "text", List.of(UUID.randomUUID(), UUID.randomUUID()));
+                new Chat(
+                        UUID.randomUUID(),
+                        "text",
+                        List.of(UUID.randomUUID(), UUID.randomUUID()),
+                        now);
         when(updateChat.updateChat(chat)).thenReturn(expectedChat);
 
         MvcResult result =
