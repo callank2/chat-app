@@ -6,7 +6,6 @@
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
-<!-- component -->
 <div class="flex-1 p:2 sm:p-6 justify-between flex flex-col h-screen">
     <div class="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
         <div class="relative flex items-center space-x-4">
@@ -16,13 +15,13 @@
                   <circle cx="8" cy="8" r="8" fill="currentColor"></circle>
                </svg>
             </span>
-                <img src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144" alt="" class="w-10 sm:w-16 h-10 sm:h-16 rounded-full">
+                <img th:src="${chat.thumbnailUrl}" alt="" class="w-10 sm:w-16 h-10 sm:h-16 rounded-full">
             </div>
             <div class="flex flex-col leading-tight">
                 <div class="text-2xl mt-1 flex items-center">
-                    <span class="text-gray-700 mr-3">Anderson Vanhron</span>
+                    <span class="text-gray-700 mr-3" th:text="${chat.name}"></span>
                 </div>
-                <span class="text-lg text-gray-600">Junior Developer</span>
+                <span class="text-lg text-gray-600" th:text="${chat.lastPostDateMsg}"></span>
             </div>
         </div>
         <div class="flex items-center space-x-2">
@@ -44,7 +43,6 @@
         </div>
     </div>
     <div id="messages" class="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
-
         <div th:each="msgGroup: ${messageGroups}" class="chat-message">
             <div th:if="not ${msgGroup.isLoggedInUser}" class="flex items-end">
                 <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
