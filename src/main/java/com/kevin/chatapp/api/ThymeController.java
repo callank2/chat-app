@@ -64,22 +64,14 @@ public class ThymeController {
     }
 
     @PostMapping("/send")
-    public String send(Model model,
-                       @RequestParam String value) {
+    public String send(Model model, @RequestParam String value) {
+        // TODO - this should send a fragment that is the last msg in the chat
         List<MessageGroupVO> messageGroups =
                 getMessageGroups(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+        List<MessageGroupVO> messageGroupsFinal = List.of(messageGroups.get(0));
 
-        ChatVO chat =
-                new ChatVO(
-                        UUID.randomUUID(),
-                        "The Dev Group Chat",
-                        "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2940&q=80",
-                        null,
-                        LocalDateTime.now().format(dateTimeFormatter));
-
-        model.addAttribute("chat", chat);
-        model.addAttribute("messageGroups", messageGroups);
-        return "chatView";
+        model.addAttribute("messageGroups", messageGroupsFinal);
+        return "fragments/chatBubbles";
     }
 
     private List<Chat> getChats() {
@@ -150,6 +142,9 @@ public class ThymeController {
                         chatId,
                         LocalDateTime.now(),
                         author2),
-                new Message(UUID.randomUUID(), "Pints?", chatId, LocalDateTime.now(), author2));
+                new Message(UUID.randomUUID(), "Pints?", chatId, LocalDateTime.now(), author2),
+                new Message(
+                        UUID.randomUUID(), "You know it!", chatId, LocalDateTime.now(), author1),
+                new Message(UUID.randomUUID(), "Where?", chatId, LocalDateTime.now(), author1));
     }
 }
