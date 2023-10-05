@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -65,12 +66,22 @@ public class ThymeController {
 
     @PostMapping("/send")
     public String send(Model model, @RequestParam String value) {
-        // TODO - this should send a fragment that is the last msg in the chat
-        List<MessageGroupVO> messageGroups =
-                getMessageGroups(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
-        List<MessageGroupVO> messageGroupsFinal = List.of(messageGroups.get(0));
+        String author1thumbnail =
+                "https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2940&q=80"; // TODO - default value like anon would be good
 
-        model.addAttribute("messageGroups", messageGroupsFinal);
+        MessageGroupVO messageGroupVO =
+                new MessageGroupVO(
+                        author1thumbnail,
+                        UUID.randomUUID(),
+                        true,
+                        List.of(
+                                new MessageVO(
+                                        value, LocalDateTime.now().format(dateTimeFormatter))));
+
+        // TODO - instead of appending to the list I could get all the messages from the last
+        // message group, and replace that group
+        // this will then update where the user thumbnail is and the shape of msgs
+        model.addAttribute("messageGroups", Collections.singletonList(messageGroupVO));
         return "fragments/chatBubbles";
     }
 
