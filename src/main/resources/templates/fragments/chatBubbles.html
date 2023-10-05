@@ -9,7 +9,7 @@
         <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
             <div th:each="msg, iStat: ${msgGroup.messages}">
                 <span th:if="not ${iStat.last}" class="px-4 py-2 rounded-lg inline-block bg-gray-300 text-gray-600" th:text="${msg.text}"></span>
-                <span th:if="${iStat.last}" class="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600" th:text="${msg.text}"></span>
+                <span th:if="${iStat.last}" class="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600" style="margin-bottom: 20px" th:text="${msg.text}"></span>
             </div>
         </div>
         <img th:src="${msgGroup.thumbnailUrl}" alt="My profile" class="w-6 h-6 rounded-full order-1">
@@ -19,7 +19,7 @@
         <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-1 items-end">
             <div th:each="msg, iStat: ${msgGroup.messages}">
                 <span th:if="not ${iStat.last}" class="px-4 py-2 rounded-lg inline-block bg-blue-600 text-white" th:text="${msg.text}"></span>
-                <span th:if="${iStat.last}" class="px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-600 text-white" th:text="${msg.text}"></span>
+                <span th:if="${iStat.last}" class="px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-600 text-white" style="margin-bottom: 20px" th:text="${msg.text}"></span>
             </div>
         </div>
         <img th:src="${msgGroup.thumbnailUrl}" alt="My profile" class="w-6 h-6 rounded-full order-2">
