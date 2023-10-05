@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kevin.chatapp.domain.Chat;
 import com.kevin.chatapp.domain.Message;
@@ -45,6 +47,25 @@ public class ThymeController {
 
     @GetMapping("/chat")
     public String viewChatPage(Model model) {
+        List<MessageGroupVO> messageGroups =
+                getMessageGroups(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+
+        ChatVO chat =
+                new ChatVO(
+                        UUID.randomUUID(),
+                        "The Dev Group Chat",
+                        "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2940&q=80",
+                        null,
+                        LocalDateTime.now().format(dateTimeFormatter));
+
+        model.addAttribute("chat", chat);
+        model.addAttribute("messageGroups", messageGroups);
+        return "chatView";
+    }
+
+    @PostMapping("/send")
+    public String send(Model model,
+                       @RequestParam String value) {
         List<MessageGroupVO> messageGroups =
                 getMessageGroups(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
 

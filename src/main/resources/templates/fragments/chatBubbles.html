@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    <div id="messages" th:fragment="chatBubbles"
+         class="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
+        <div th:each="msgGroup: ${messageGroups}" class="chat-message">
+            <div th:if="not ${msgGroup.isLoggedInUser}" class="flex items-end">
+                <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
+                    <div th:each="msg, iStat: ${msgGroup.messages}">
+                        <span th:if="not ${iStat.last}" class="px-4 py-2 rounded-lg inline-block bg-gray-300 text-gray-600" th:text="${msg.text}"></span>
+                        <span th:if="${iStat.last}" class="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600" th:text="${msg.text}"></span>
+                    </div>
+                </div>
+                <img th:src="${msgGroup.thumbnailUrl}" alt="My profile" class="w-6 h-6 rounded-full order-1">
+            </div>
+
+            <div th:if="${msgGroup.isLoggedInUser}" class="flex items-end justify-end">
+                <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-1 items-end">
+                    <div th:each="msg, iStat: ${msgGroup.messages}">
+                        <span th:if="not ${iStat.last}" class="px-4 py-2 rounded-lg inline-block bg-blue-600 text-white" th:text="${msg.text}"></span>
+                        <span th:if="${iStat.last}" class="px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-600 text-white" th:text="${msg.text}"></span>
+                    </div>
+                </div>
+                <img th:src="${msgGroup.thumbnailUrl}" alt="My profile" class="w-6 h-6 rounded-full order-2">
+            </div>
+        </div>
+        <div id="lastMsgs"></div> <!-- TODO come back and remove this is for testing -->
+    </div>
+
+<style>
+    .scrollbar-w-2::-webkit-scrollbar {
+        width: 0.25rem;
+        height: 0.25rem;
+    }
+
+    .scrollbar-track-blue-lighter::-webkit-scrollbar-track {
+        --bg-opacity: 1;
+        background-color: #f7fafc;
+        background-color: rgba(247, 250, 252, var(--bg-opacity));
+    }
+
+    .scrollbar-thumb-blue::-webkit-scrollbar-thumb {
+        --bg-opacity: 1;
+        background-color: #edf2f7;
+        background-color: rgba(237, 242, 247, var(--bg-opacity));
+    }
+
+    .scrollbar-thumb-rounded::-webkit-scrollbar-thumb {
+        border-radius: 0.25rem;
+    }
+</style>
+
+<script>
+    const el = document.getElementById('messages')
+    el.scrollTop = el.scrollHeight
+</script>
+</body>
+</html>
