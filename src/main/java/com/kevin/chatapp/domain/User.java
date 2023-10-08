@@ -11,4 +11,7 @@ import lombok.Builder;
 @Builder(toBuilder = true)
 @Document("user")
 public record User(
-        UUID id, @NotBlank String username, @NotBlank String password, List<UUID> chatIds) {}
+        UUID id,
+        @NotBlank String username,
+        @NotBlank String password,
+        List<UUID> chatIds) {}
